@@ -19,6 +19,7 @@ CAShapeLayer *backgroundCircle;         //Green circle
 CAShapeLayer *threshold;                //White circle
 int radius;
 int radius_threshold;
+int green_radius;
 int level;
 int seconds_remaining;
 int lives_remaining;
@@ -44,13 +45,15 @@ NSTimer *greenZoneTimer;
     radius = 10;
     radius_threshold = 100;
     
-    NSLog(@"RESET");
-    
     seconds_remaining = 3;
     has_started_timer = NO;
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat centerWidth = screenRect.size.width / 2;
     CGFloat centerHeight = screenRect.size.height / 2;
+    
+    green_radius = screenRect.size.width;
+    
+    NSLog(@"RESET");
     
     self.levelLabel.text = [@"Level: " stringByAppendingString:[@(level) stringValue]];
     self.levelLabel.center = CGPointMake(100, 30);
@@ -79,7 +82,8 @@ NSTimer *greenZoneTimer;
         [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
     }
     else if(level >= 6){
-        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (screenRect.size.width - 5*level)/2, centerHeight - (screenRect.size.width - 5*level)/2, screenRect.size.width - 5*level, screenRect.size.width - 5*level)] CGPath]];
+        green_radius = green_radius - 5*level;
+        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - green_radius/2, centerHeight - green_radius/2, screenRect.size.width - 5*level, screenRect.size.width - 5*level)] CGPath]];
         [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
         
         radius_threshold = radius_threshold + 5*level;
@@ -92,6 +96,9 @@ NSTimer *greenZoneTimer;
         threshold.opacity = 0.5;
         [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
     }
+    else if(level >= 15){
+        
+    }
     [circle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - radius/2, centerHeight - radius/2, radius, radius)] CGPath]];
     [circle setFillColor:[[UIColor redColor] CGColor]];
     
@@ -103,7 +110,7 @@ NSTimer *greenZoneTimer;
 }
 
 -(BOOL) inGreenZone{
-    if(radius >=  radius_threshold){
+    if(radius >=  radius_threshold && radius <= green_radius){
         return YES;
     }
     return NO;
@@ -120,7 +127,7 @@ NSTimer *greenZoneTimer;
     else{
         if(has_started_timer){      //Life lost
             [greenZoneTimer invalidate];
-            if(lives_remaining < 1){
+            if(lives_remaining <= 1){
                 UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"GameOver"];
                 
                 [self presentViewController:vc animated:NO completion:nil];
