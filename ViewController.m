@@ -32,13 +32,20 @@ NSTimer *greenZoneTimer;
     
     lives_remaining = 3;
     level = 1;
-    
     [self reset];
+    
 }
 
--(void) reset{
+-(void) reset {
+    [circle removeFromSuperlayer];
+    [threshold removeFromSuperlayer];
+    [backgroundCircle removeFromSuperlayer];
+    
     radius = 10;
     radius_threshold = 100;
+    
+    NSLog(@"RESET");
+    
     seconds_remaining = 3;
     has_started_timer = NO;
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -54,26 +61,45 @@ NSTimer *greenZoneTimer;
     self.livesLabel.text = [@(lives_remaining) stringValue];
     self.livesLabel.center = CGPointMake(screenRect.size.width + 50, 30);
     
-    
-    circle = [CAShapeLayer layer];
     backgroundCircle = [CAShapeLayer layer];
     threshold = [CAShapeLayer layer];
+    circle = [CAShapeLayer layer];
     
-    [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - screenRect.size.width/2, centerHeight - screenRect.size.width/2, screenRect.size.width, screenRect.size.width)] CGPath]];
-    [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
-    [self.view.layer addSublayer:backgroundCircle];
-    
-    [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - radius_threshold/2, centerHeight - radius_threshold/2, radius_threshold, radius_threshold)] CGPath]];
-    [threshold setFillColor:[[UIColor whiteColor] CGColor]];
-    [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
-    
+    if(level <= 5){
+        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - screenRect.size.width/2, centerHeight - screenRect.size.width/2, screenRect.size.width, screenRect.size.width)] CGPath]];
+        [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
+        
+        
+        radius_threshold = radius_threshold + 20*level;
+        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - radius_threshold/2, centerHeight - radius_threshold/2, radius_threshold, radius_threshold)] CGPath]];
+        [threshold setFillColor:[[UIColor whiteColor] CGColor]];
+        [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
+        
+        threshold.opacity = 0.5;
+        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
+    }
+    else if(level >= 6){
+        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (screenRect.size.width - 5*level)/2, centerHeight - (screenRect.size.width - 5*level)/2, screenRect.size.width - 5*level, screenRect.size.width - 5*level)] CGPath]];
+        [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
+        
+        radius_threshold = radius_threshold + 5*level;
+        
+        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2,
+                                                                              centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
+        [threshold setFillColor:[[UIColor whiteColor] CGColor]];
+        [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
+        
+        threshold.opacity = 0.5;
+        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
+    }
     [circle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - radius/2, centerHeight - radius/2, radius, radius)] CGPath]];
     [circle setFillColor:[[UIColor redColor] CGColor]];
-    [self.view.layer addSublayer:circle];
     
-    threshold.opacity = 0.5;
+    [self.view.layer addSublayer:backgroundCircle];
+    [self.view.layer addSublayer:circle];
     [self.view.layer addSublayer:threshold];
-    [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
+    
+   
 }
 
 -(BOOL) inGreenZone{
@@ -85,17 +111,24 @@ NSTimer *greenZoneTimer;
 
 -(void) checkForGreen{
     if([self inGreenZone]){
-        if (!has_started_timer){
+        if (!has_started_timer){        //Start timer because in green zone
             greenZoneTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(decrementTime) userInfo:nil repeats:YES];
             has_started_timer = YES;
         }
         
     }
     else{
-        if(has_started_timer){
+        if(has_started_timer){      //Life lost
             [greenZoneTimer invalidate];
-            lives_remaining--;
-            [self reset];
+            if(lives_remaining < 1){
+                UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"GameOver"];
+                
+                [self presentViewController:vc animated:NO completion:nil];
+            }
+            else{
+                lives_remaining--;
+                [self reset];
+            }
         }
     }
 }
@@ -140,7 +173,7 @@ NSTimer *greenZoneTimer;
 }
          
 -(void) decrementTime{
-    if (seconds_remaining <= 0){
+    if (seconds_remaining <= 0){        //Next level
         level++;
         self.levelLabel.text = [@"Level: " stringByAppendingString:[@(level) stringValue]];
         [greenZoneTimer invalidate];
@@ -151,6 +184,10 @@ NSTimer *greenZoneTimer;
         seconds_remaining -= 1;
         self.timerLabel.text = [@(seconds_remaining) stringValue];
     }
+    
+}
+
+-(void) nextLevelGreen{
     
 }
 

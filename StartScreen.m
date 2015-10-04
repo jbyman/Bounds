@@ -25,7 +25,6 @@
     
     NSLog(@"Start screen");
     UIButton *customButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    //UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [customButton setBackgroundImage:[[UIImage imageNamed:@"play.png"]
                                       resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)]
                             forState:UIControlStateNormal];
@@ -41,19 +40,10 @@
 
 -(void) startGame: (id) sender{
     NSLog(@"YESSS");
+    [self dismissViewControllerAnimated:YES completion:nil];
     ViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MainGame"];
     
     [self presentViewController:vc animated:NO completion:nil];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
