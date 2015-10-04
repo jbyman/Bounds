@@ -30,6 +30,7 @@
 		F0D2D9011BC0DB250090C568 /* sadstar.png in Resources */ = {isa = PBXBuildFile; fileRef = F0D2D9001BC0DB250090C568 /* sadstar.png */; settings = {ASSET_TAGS = (); }; };
 		F0D2D9041BC0DBD00090C568 /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D2D9031BC0DBD00090C568 /* GameOver.m */; settings = {ASSET_TAGS = (); }; };
 		F0D2D9061BC0E0510090C568 /* boundstitle.png in Resources */ = {isa = PBXBuildFile; fileRef = F0D2D9051BC0E0510090C568 /* boundstitle.png */; settings = {ASSET_TAGS = (); }; };
+		F0D2D9081BC0F63A0090C568 /* SpaceShip.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D2D9071BC0F63A0090C568 /* SpaceShip.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		F0D2D9021BC0DBD00090C568 /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
 		F0D2D9031BC0DBD00090C568 /* GameOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOver.m; sourceTree = "<group>"; };
 		F0D2D9051BC0E0510090C568 /* boundstitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boundstitle.png; sourceTree = "<group>"; };
+		F0D2D9071BC0F63A0090C568 /* SpaceShip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpaceShip.m; sourceTree = "<group>"; };
+		F0D2D9091BC0F7490090C568 /* SpaceShip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpaceShip.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +127,8 @@
 				F05D8AA01BC0C41F00A6E2B7 /* StartScreen.m */,
 				F05D8AA11BC0C41F00A6E2B7 /* ViewController.h */,
 				F05D8AA21BC0C41F00A6E2B7 /* ViewController.m */,
+				F0D2D9071BC0F63A0090C568 /* SpaceShip.m */,
+				F0D2D9091BC0F7490090C568 /* SpaceShip.h */,
 				F05D8A671BC0C3C300A6E2B7 /* Bounds */,
 				F05D8A811BC0C3C300A6E2B7 /* BoundsTests */,
 				F05D8A8C1BC0C3C300A6E2B7 /* BoundsUITests */,
@@ -343,6 +348,7 @@
 			files = (
 				F05D8AA31BC0C41F00A6E2B7 /* AppDelegate.m in Sources */,
 				F0D2D9041BC0DBD00090C568 /* GameOver.m in Sources */,
+				F0D2D9081BC0F63A0090C568 /* SpaceShip.m in Sources */,
 				F05D8AA71BC0C41F00A6E2B7 /* StartScreen.m in Sources */,
 				F05D8A6A1BC0C3C300A6E2B7 /* main.m in Sources */,
 				F05D8AA81BC0C41F00A6E2B7 /* ViewController.m in Sources */,

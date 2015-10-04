@@ -70,11 +70,11 @@
             </objects>
             <point key="canvasLocation" x="157" y="257"/>
         </scene>
-        <!--View Controller-->
+        <!--Game Over-->
         <scene sceneID="xpJ-D5-Meb">
             <objects>
-                <viewController storyboardIdentifier="GameOver" id="V1x-ig-AGl" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="iaM-Cf-cDn">
+                <viewController storyboardIdentifier="GameOver" id="V1x-ig-AGl" customClass="GameOver" sceneMemberID="viewController">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="iaM-Cf-cDn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -83,18 +83,24 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAME" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fF1-gV-NpN">
-                                <rect key="frame" x="7" y="0.0" width="286" height="173"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OVER" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pf9-PH-av9">
+                                <rect key="frame" x="0.0" y="126" width="286" height="173"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="87"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OVER" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pf9-PH-av9">
-                                <rect key="frame" x="0.0" y="126" width="286" height="173"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="try_again.png" id="n03-XK-swX">
+                                <rect key="frame" x="17" y="433" width="302" height="104"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <animations/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAME" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fF1-gV-NpN">
+                                <rect key="frame" x="7" y="0.0" width="286" height="173"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <animations/>
+                                <accessibility key="accessibilityConfiguration" identifier="GameOver" label="GameOver"/>
                                 <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="87"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -157,5 +163,6 @@
         <image name="sadstar.png" width="210" height="165"/>
         <image name="starkite.png" width="171" height="204"/>
         <image name="starkite_small.png" width="137" height="163"/>
+        <image name="try_again.png" width="302" height="104"/>
     </resources>
 </document>

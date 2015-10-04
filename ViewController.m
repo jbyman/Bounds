@@ -7,6 +7,9 @@
 //
 
 #import "ViewController.h"
+#import "SpaceShip.h"
+#import "GameOver.h"
+#import <Foundation/Foundation.h>
 
 @interface ViewController ()
 
@@ -21,18 +24,34 @@ int radius;
 int radius_threshold;
 int green_radius;
 int level;
+int difficult_factor;
 int seconds_remaining;
 int lives_remaining;
+int shake_percentage;
+int blue_starting_threshold;
+int blue_starting_green;
 BOOL has_started_timer;
+BOOL shake_enabled;
 NSTimer *touchTimer;
 NSTimer *greenZoneTimer;
+CGRect screenRect;
+CGFloat centerWidth;
+CGFloat centerHeight;
+NSMutableArray<SpaceShip*> *spaceShips;
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    spaceShips = [[NSMutableArray alloc] init];
+
+    [self drawSpaceShip];
     
-    lives_remaining = 3;
-    level = 1;
+    
+    lives_remaining = 0;
+    shake_percentage = 50;
+    level = 15;
+    difficult_factor = 15;
+    shake_enabled = NO;
     [self reset];
     
 }
@@ -47,9 +66,9 @@ NSTimer *greenZoneTimer;
     
     seconds_remaining = 3;
     has_started_timer = NO;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat centerWidth = screenRect.size.width / 2;
-    CGFloat centerHeight = screenRect.size.height / 2;
+    screenRect = [[UIScreen mainScreen] bounds];
+    centerWidth = screenRect.size.width / 2;
+    centerHeight = screenRect.size.height / 2;
     
     green_radius = screenRect.size.width;
     
@@ -73,7 +92,7 @@ NSTimer *greenZoneTimer;
         [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
         
         
-        radius_threshold = radius_threshold + 20*level;
+        radius_threshold = radius_threshold + 20*difficult_factor;
         [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - radius_threshold/2, centerHeight - radius_threshold/2, radius_threshold, radius_threshold)] CGPath]];
         [threshold setFillColor:[[UIColor whiteColor] CGColor]];
         [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
@@ -81,12 +100,12 @@ NSTimer *greenZoneTimer;
         threshold.opacity = 0.5;
         [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
     }
-    else if(level >= 6){
-        green_radius = green_radius - 5*level;
-        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - green_radius/2, centerHeight - green_radius/2, screenRect.size.width - 5*level, screenRect.size.width - 5*level)] CGPath]];
+    else if(level >= 6 && level < 15){
+        green_radius = green_radius - 5*difficult_factor;
+        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - green_radius/2, centerHeight - green_radius/2, screenRect.size.width - 5*difficult_factor, screenRect.size.width - 5*difficult_factor)] CGPath]];
         [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
         
-        radius_threshold = radius_threshold + 5*level;
+        radius_threshold = radius_threshold + 5*difficult_factor;
         
         [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2,
                                                                               centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
@@ -97,7 +116,25 @@ NSTimer *greenZoneTimer;
         [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
     }
     else if(level >= 15){
+        shake_enabled = YES;
         
+        if (level == 15){
+            difficult_factor = 6;
+        }
+        
+        green_radius = green_radius - 5*difficult_factor;
+        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - green_radius/2, centerHeight - green_radius/2, screenRect.size.width - 5*difficult_factor, screenRect.size.width - 5*difficult_factor)] CGPath]];
+        [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
+        
+        radius_threshold = radius_threshold + 5*difficult_factor;
+        
+        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2,
+                                                                              centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
+        [threshold setFillColor:[[UIColor whiteColor] CGColor]];
+        [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
+        
+        threshold.opacity = 0.5;
+        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
     }
     [circle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - radius/2, centerHeight - radius/2, radius, radius)] CGPath]];
     [circle setFillColor:[[UIColor redColor] CGColor]];
@@ -116,6 +153,13 @@ NSTimer *greenZoneTimer;
     return NO;
 }
 
+-(void) showGameOver{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ViewController *myVC = (ViewController*)[storyboard instantiateViewControllerWithIdentifier:@"GameOver"];
+    NSLog(@"%@", myVC);
+    [self presentViewController:myVC animated:NO completion:nil];
+}
+
 -(void) checkForGreen{
     if([self inGreenZone]){
         if (!has_started_timer){        //Start timer because in green zone
@@ -126,11 +170,12 @@ NSTimer *greenZoneTimer;
     }
     else{
         if(has_started_timer){      //Life lost
-            [greenZoneTimer invalidate];
             if(lives_remaining <= 1){
-                UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"GameOver"];
+                NSLog(@"LKSDJFLKDSJFLKSJDFDKSJFLSKDFJ");
+                [greenZoneTimer invalidate];
+                [self performSelector:@selector(showGameOver) withObject:nil afterDelay:0.0];
+                [self dismissViewControllerAnimated:NO completion:nil];
                 
-                [self presentViewController:vc animated:NO completion:nil];
             }
             else{
                 lives_remaining--;
@@ -141,6 +186,19 @@ NSTimer *greenZoneTimer;
 }
 
 -(void) touchesBegan:(NSSet*) touches withEvent:(UIEvent *)event{
+    if(shake_enabled){
+        [self shakeScreen];
+    }
+    
+    
+    NSDictionary *params;
+    for(int i = 0; i < [spaceShips count]; i++){
+        [spaceShips[i] moveSpaceShip];
+        if(spaceShips[i].is_activated){
+            params = [NSDictionary dictionaryWithObjectsAndKeys:spaceShips[i], @"spaceship", nil];
+            [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(shootAtCenter:) userInfo:params repeats:YES];
+        }
+    }
     [touchTimer invalidate];
     touchTimer = [NSTimer scheduledTimerWithTimeInterval:0.015 target:self selector:@selector(incrementImage) userInfo: nil repeats:YES];
 }
@@ -148,6 +206,55 @@ NSTimer *greenZoneTimer;
 -(void) touchesEnded:(NSSet*) touches withEvent:(UIEvent *)event{
     [touchTimer invalidate];
     touchTimer = [NSTimer scheduledTimerWithTimeInterval:0.015 target:self selector:@selector(decrementImage) userInfo: nil repeats:YES];
+}
+
+-(void) shakeScreen{
+    int r = arc4random_uniform(100);
+    int num_shakes = arc4random_uniform(7);
+    
+    if (r <= shake_percentage){
+        CAKeyframeAnimation * anim = [ CAKeyframeAnimation animationWithKeyPath:@"transform" ] ;
+        anim.values = @[ [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-20.0f, 5.3f, 1.0f) ], [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(6.0f, 1.0f, -3.0f) ] ] ;
+        anim.autoreverses = YES ;
+        anim.repeatCount = num_shakes;
+        anim.duration = 0.07f ;
+        
+        [self.view.layer addAnimation:anim forKey:nil ];
+    }
+}
+
+-(SpaceShip*) drawSpaceShip{
+    SpaceShip *s = [SpaceShip initWithImage:@"spaceship.png" andLaser:@"lasers.png"];
+    
+    s.imgView = [[UIImageView alloc] initWithImage:s.body_image];
+    s.imgView.frame = CGRectMake(s.xPos, s.yPos, s.imgView.frame.size.width, s.imgView.frame.size.height);
+    
+    [self.view addSubview:s.imgView];
+    [spaceShips addObject:s];
+    return s;
+}
+
+-(void) shootAtCenter:(NSTimer*) t{
+    SpaceShip *s = [[t userInfo] objectForKey:@"spaceship"];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    CGPoint p = CGPointMake(screenWidth, screenHeight);
+    
+    
+    s.laser_imgView = [[UIImageView alloc] initWithImage:s.laser_image];
+    s.laser_imgView.frame = CGRectMake(s.xPos, s.yPos, s.laser_imgView.frame.size.width, s.laser_imgView.frame.size.height);
+    [self.view addSubview:s.laser_imgView];
+    
+    [UIView animateWithDuration:1.0f animations:^{
+        s.laser_imgView.frame = CGRectMake(centerWidth, centerHeight, s.laser_imgView.frame.size.width, s.laser_imgView.frame.size.height);
+    }];
+    //[s.laser_imgView removeFromSuperview];
+    
+    if(p.y > centerHeight){
+        NSLog(@"Intersection");
+        radius += 5;
+    }
 }
 
 -(void) incrementImage{
@@ -182,6 +289,7 @@ NSTimer *greenZoneTimer;
 -(void) decrementTime{
     if (seconds_remaining <= 0){        //Next level
         level++;
+        difficult_factor++;
         self.levelLabel.text = [@"Level: " stringByAppendingString:[@(level) stringValue]];
         [greenZoneTimer invalidate];
         self.timerLabel.text = @"Good!";
@@ -191,10 +299,6 @@ NSTimer *greenZoneTimer;
         seconds_remaining -= 1;
         self.timerLabel.text = [@(seconds_remaining) stringValue];
     }
-    
-}
-
--(void) nextLevelGreen{
     
 }
 
