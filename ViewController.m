@@ -43,14 +43,11 @@ NSMutableArray<SpaceShip*> *spaceShips;
 - (void)viewDidLoad {
     [super viewDidLoad];
     spaceShips = [[NSMutableArray alloc] init];
-
-    [self drawSpaceShip];
     
-    
-    lives_remaining = 0;
+    lives_remaining = 3;
     shake_percentage = 50;
-    level = 15;
-    difficult_factor = 15;
+    level = 1;
+    difficult_factor = 1;
     shake_enabled = NO;
     [self reset];
     
@@ -60,6 +57,9 @@ NSMutableArray<SpaceShip*> *spaceShips;
     [circle removeFromSuperlayer];
     [threshold removeFromSuperlayer];
     [backgroundCircle removeFromSuperlayer];
+    for(int i =0; i < spaceShips.count; i++){
+        spaceShips[i].body_image = nil;
+    }
     
     radius = 10;
     radius_threshold = 100;
@@ -70,7 +70,7 @@ NSMutableArray<SpaceShip*> *spaceShips;
     centerWidth = screenRect.size.width / 2;
     centerHeight = screenRect.size.height / 2;
     
-    green_radius = screenRect.size.width;
+    green_radius = screenRect.size.width-1;
     
     NSLog(@"RESET");
     
@@ -88,7 +88,7 @@ NSMutableArray<SpaceShip*> *spaceShips;
     circle = [CAShapeLayer layer];
     
     if(level <= 5){
-        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - screenRect.size.width/2, centerHeight - screenRect.size.width/2, screenRect.size.width, screenRect.size.width)] CGPath]];
+        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (screenRect.size.width-1)/2, centerHeight - (screenRect.size.width-1)/2, screenRect.size.width-1, screenRect.size.width-11)] CGPath]];
         [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
         
         
@@ -107,15 +107,14 @@ NSMutableArray<SpaceShip*> *spaceShips;
         
         radius_threshold = radius_threshold + 5*difficult_factor;
         
-        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2,
-                                                                              centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
+        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2, centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
         [threshold setFillColor:[[UIColor whiteColor] CGColor]];
         [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
         
         threshold.opacity = 0.5;
         [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
     }
-    else if(level >= 15){
+    else if(level >= 15 && level < 24){
         shake_enabled = YES;
         
         if (level == 15){
@@ -128,14 +127,73 @@ NSMutableArray<SpaceShip*> *spaceShips;
         
         radius_threshold = radius_threshold + 5*difficult_factor;
         
-        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2,
-                                                                              centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
+        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2, centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
         [threshold setFillColor:[[UIColor whiteColor] CGColor]];
         [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
         
         threshold.opacity = 0.5;
         [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
     }
+    else if(level >= 24 && level < 33){
+        shake_enabled = NO;
+        [self drawSpaceShip];
+        
+        if (level == 24){
+            difficult_factor = 6;
+        }
+        
+        green_radius = green_radius - 5*difficult_factor;
+        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - green_radius/2, centerHeight - green_radius/2, screenRect.size.width - 5*difficult_factor, screenRect.size.width - 5*difficult_factor)] CGPath]];
+        [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
+        
+        radius_threshold = radius_threshold + 5*difficult_factor;
+        
+        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2, centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
+        [threshold setFillColor:[[UIColor whiteColor] CGColor]];
+        [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
+        
+        threshold.opacity = 0.5;
+        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
+    }
+    else if(level >= 33 && level < 42){
+        shake_enabled = YES;
+        [self drawSpaceShip];
+        
+        if (level == 33){
+            difficult_factor = 6;
+        }
+        
+        green_radius = green_radius - 5*difficult_factor;
+        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - green_radius/2, centerHeight - green_radius/2, screenRect.size.width - 5*difficult_factor, screenRect.size.width - 5*difficult_factor)] CGPath]];
+        [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
+        
+        radius_threshold = radius_threshold + 5*difficult_factor;
+        
+        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2, centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
+        [threshold setFillColor:[[UIColor whiteColor] CGColor]];
+        [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
+        
+        threshold.opacity = 0.5;
+        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
+    }
+    else if(level >= 42){
+        shake_enabled = YES;
+        [self drawSpaceShip];
+        
+        green_radius = green_radius - 5*difficult_factor;
+        [backgroundCircle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - green_radius/2, centerHeight - green_radius/2, screenRect.size.width - 5*difficult_factor, screenRect.size.width - 5*difficult_factor)] CGPath]];
+        [backgroundCircle setFillColor:[[UIColor greenColor] CGColor]];
+        
+        radius_threshold = radius_threshold + 5*difficult_factor;
+        
+        [threshold setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - (radius_threshold)/2, centerHeight - (radius_threshold)/2,radius_threshold, radius_threshold)] CGPath]];
+        [threshold setFillColor:[[UIColor whiteColor] CGColor]];
+        [threshold setStrokeColor:[[UIColor whiteColor] CGColor]];
+        
+        threshold.opacity = 0.5;
+        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(checkForGreen) userInfo:nil repeats:YES];
+    }
+    
     [circle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - radius/2, centerHeight - radius/2, radius, radius)] CGPath]];
     [circle setFillColor:[[UIColor redColor] CGColor]];
     
@@ -156,7 +214,6 @@ NSMutableArray<SpaceShip*> *spaceShips;
 -(void) showGameOver{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ViewController *myVC = (ViewController*)[storyboard instantiateViewControllerWithIdentifier:@"GameOver"];
-    NSLog(@"%@", myVC);
     [self presentViewController:myVC animated:NO completion:nil];
 }
 
@@ -170,11 +227,11 @@ NSMutableArray<SpaceShip*> *spaceShips;
     }
     else{
         if(has_started_timer){      //Life lost
+            [greenZoneTimer invalidate];
             if(lives_remaining <= 1){
                 NSLog(@"LKSDJFLKDSJFLKSJDFDKSJFLSKDFJ");
-                [greenZoneTimer invalidate];
                 [self performSelector:@selector(showGameOver) withObject:nil afterDelay:0.0];
-                [self dismissViewControllerAnimated:NO completion:nil];
+                [[self presentingViewController] dismissViewControllerAnimated:NO completion:nil];
                 
             }
             else{
@@ -225,10 +282,8 @@ NSMutableArray<SpaceShip*> *spaceShips;
 
 -(SpaceShip*) drawSpaceShip{
     SpaceShip *s = [SpaceShip initWithImage:@"spaceship.png" andLaser:@"lasers.png"];
-    
     s.imgView = [[UIImageView alloc] initWithImage:s.body_image];
     s.imgView.frame = CGRectMake(s.xPos, s.yPos, s.imgView.frame.size.width, s.imgView.frame.size.height);
-    
     [self.view addSubview:s.imgView];
     [spaceShips addObject:s];
     return s;
@@ -253,7 +308,7 @@ NSMutableArray<SpaceShip*> *spaceShips;
     
     if(p.y > centerHeight){
         NSLog(@"Intersection");
-        radius += 5;
+        radius += 3;
     }
 }
 
@@ -279,7 +334,6 @@ NSMutableArray<SpaceShip*> *spaceShips;
     
     if (radius <= 10){
         [touchTimer invalidate];
-        NSLog(@"Game over!");
     }
     else{
         [circle setPath:[[UIBezierPath bezierPathWithOvalInRect:CGRectMake(centerWidth - radius/2, centerHeight - radius/2, radius, radius)] CGPath]];

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="md9-eT-ENG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="md9-eT-ENG">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
@@ -46,15 +46,14 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
                             </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="starkite_small.png" id="aAQ-su-S5C">
-                                <rect key="frame" x="-15" y="381" width="171" height="204"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <animations/>
-                            </imageView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="cloud.png" id="meb-Xp-QD0">
                                 <rect key="frame" x="173" y="55" width="166" height="105"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="starkite_green.png" id="yKt-wo-b90">
+                                <rect key="frame" x="2" y="402" width="139" height="165"/>
+                                <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                         </subviews>
                         <animations/>
@@ -70,10 +69,10 @@
             </objects>
             <point key="canvasLocation" x="157" y="257"/>
         </scene>
-        <!--Game Over-->
+        <!--GameOver-->
         <scene sceneID="xpJ-D5-Meb">
             <objects>
-                <viewController storyboardIdentifier="GameOver" id="V1x-ig-AGl" customClass="GameOver" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameOver" title="GameOver" id="V1x-ig-AGl" customClass="GameOver" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="iaM-Cf-cDn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -91,11 +90,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="try_again.png" id="n03-XK-swX">
-                                <rect key="frame" x="17" y="433" width="302" height="104"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <animations/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAME" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fF1-gV-NpN">
                                 <rect key="frame" x="7" y="0.0" width="286" height="173"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -105,19 +99,31 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="try_again.png" id="n03-XK-swX">
+                                <rect key="frame" x="9" y="449" width="302" height="104"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <animations/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                    <bool key="isElement" value="YES"/>
+                                </accessibility>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.4850558667" green="1" blue="0.96688454420000003" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <connections>
+                        <segue destination="md9-eT-ENG" kind="push" identifier="TryAgain" splitViewControllerTargetIndex="1" id="yxw-RP-TBt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DSw-ey-fXy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="495" y="257"/>
+            <point key="canvasLocation" x="499" y="257"/>
         </scene>
-        <!--Start Screen-->
+        <!--StartScreen-->
         <scene sceneID="UhH-ve-HNV">
             <objects>
-                <viewController id="md9-eT-ENG" customClass="StartScreen" sceneMemberID="viewController">
+                <viewController title="StartScreen" id="md9-eT-ENG" customClass="StartScreen" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6sR-bq-vn5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -132,11 +138,6 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
                             </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="starkite.png" id="AIP-IG-yof">
-                                <rect key="frame" x="-19" y="345" width="214" height="255"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <animations/>
-                            </imageView>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="cloud.png" id="Xk7-Ko-eDa">
                                 <rect key="frame" x="174" y="124" width="166" height="105"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -147,22 +148,26 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
                             </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="starkite_green.png" id="hlZ-Bj-Ij9">
+                                <rect key="frame" x="10" y="386" width="136" height="162"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.4850558667" green="1" blue="0.96688454420000003" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ltK-GH-gUi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7aR-nl-d9v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-197" y="262"/>
+            <point key="canvasLocation" x="-199" y="257"/>
         </scene>
     </scenes>
     <resources>
         <image name="boundstitle.png" width="155" height="45"/>
         <image name="cloud.png" width="166" height="105"/>
         <image name="sadstar.png" width="210" height="165"/>
-        <image name="starkite.png" width="171" height="204"/>
-        <image name="starkite_small.png" width="137" height="163"/>
+        <image name="starkite_green.png" width="139" height="165"/>
         <image name="try_again.png" width="302" height="104"/>
     </resources>
 </document>

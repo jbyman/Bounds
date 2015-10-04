@@ -40,8 +40,7 @@
 
 -(void) startGame: (id) sender{
     NSLog(@"YESSS");
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+    [[self presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ViewController *myVC = (ViewController*)[storyboard instantiateViewControllerWithIdentifier:@"MainGame"];
     NSLog(@"%@", myVC);
