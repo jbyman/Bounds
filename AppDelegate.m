@@ -1,12 +1,13 @@
 //
 //  AppDelegate.m
-//  Bounds
+//  UpstateHacksEntry
 //
 //  Created by Jake Byman on 10/3/15.
 //  Copyright © 2015 Jake Byman. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "StartScreen.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,6 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
     return YES;
 }
 
