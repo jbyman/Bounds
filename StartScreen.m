@@ -26,7 +26,7 @@
     NSLog(@"Start screen");
     UIButton *customButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     //UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [customButton setBackgroundImage:[[UIImage imageNamed:@"Play Button Unindented.png"]
+    [customButton setBackgroundImage:[[UIImage imageNamed:@"play.png"]
                                       resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)]
                             forState:UIControlStateNormal];
     customButton.frame = CGRectMake(centerWidth - 153/2, centerHeight - 153/2, 153, 153);
