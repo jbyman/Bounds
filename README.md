@@ -3,11 +3,11 @@ This was our entry for Hack Upstate 2015, and was awarded second place in the co
 
 # Creators
 
-Jonathan "Jake" Byman (@jbyman) --- Developer
+Jonathan "Jake" Byman ([@jbyman](http://www.github.com/jbyman)) --- Developer
 
-Michael Wagner (@mwagner25) --- Developer
+Michael Wagner ([@mwagner25](http://www.github.com/mwagner25)) --- Developer
 
-Samuel Weintraub (@saw930) --- UI/UX
+Samuel Weintraub ([@saw930](http://www.github.com/saw930)) --- UI/UX
 
 
 
