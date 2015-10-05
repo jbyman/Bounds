@@ -16,9 +16,9 @@ This game is based on boundaries (hence the name), where by touching the screen 
 of the red circle in the center. Your objective is to keep the red circle in the green zone for three seconds.
 You will find that this task gets increasingly difficult with more variables in the equation.
 
-[1] (https://github.com/jbyman/bounds/blob/master/images/UI/1.png)
-[2] (https://github.com/jbyman/bounds/blob/master/images/UI/2.png)
-[3] (https://github.com/jbyman/bounds/blob/master/images/UI/3.png)
+![1] (https://github.com/jbyman/bounds/blob/master/images/UI/1.png)
+![2] (https://github.com/jbyman/bounds/blob/master/images/UI/2.png)
+![3] (https://github.com/jbyman/bounds/blob/master/images/UI/3.png)
 
 # Features
 
