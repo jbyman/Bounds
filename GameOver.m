@@ -15,7 +15,6 @@
 @implementation GameOver
 
 - (void)viewDidLoad {
-    NSLog(@"GAME OVER DISPLAYED");
     [super viewDidLoad];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat centerWidth = screenRect.size.width / 2;
@@ -25,7 +24,6 @@
     [customButton setBackgroundImage:[[UIImage imageNamed:@"try_again.png"]
                                       resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)]
                             forState:UIControlStateNormal];
-    NSLog(@"%@", customButton);
     customButton.frame = CGRectMake(centerWidth, centerHeight, 302, 104);
     [customButton addTarget:self action:@selector(tryAgain) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:customButton];

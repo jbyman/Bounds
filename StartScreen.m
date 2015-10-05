@@ -23,7 +23,6 @@
     CGFloat centerWidth = screenRect.size.width / 2;
     CGFloat centerHeight = screenRect.size.height / 2;
     
-    NSLog(@"Start screen");
     UIButton *customButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [customButton setBackgroundImage:[[UIImage imageNamed:@"play.png"]
                                       resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)]
@@ -39,11 +38,9 @@
 }
 
 -(void) startGame: (id) sender{
-    NSLog(@"YESSS");
     [[self presentingViewController] dismissViewControllerAnimated:NO completion:nil];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ViewController *myVC = (ViewController*)[storyboard instantiateViewControllerWithIdentifier:@"MainGame"];
-    NSLog(@"%@", myVC);
     [self presentViewController:myVC animated:NO completion:nil];
 }
 

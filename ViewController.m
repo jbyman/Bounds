@@ -72,8 +72,6 @@ NSMutableArray<SpaceShip*> *spaceShips;
     
     green_radius = screenRect.size.width-1;
     
-    NSLog(@"RESET");
-    
     self.levelLabel.text = [@"Level: " stringByAppendingString:[@(level) stringValue]];
     self.levelLabel.center = CGPointMake(100, 30);
     
@@ -229,7 +227,6 @@ NSMutableArray<SpaceShip*> *spaceShips;
         if(has_started_timer){      //Life lost
             [greenZoneTimer invalidate];
             if(lives_remaining <= 1){
-                NSLog(@"LKSDJFLKDSJFLKSJDFDKSJFLSKDFJ");
                 [self performSelector:@selector(showGameOver) withObject:nil afterDelay:0.0];
                 [[self presentingViewController] dismissViewControllerAnimated:NO completion:nil];
                 
@@ -307,7 +304,6 @@ NSMutableArray<SpaceShip*> *spaceShips;
     //[s.laser_imgView removeFromSuperview];
     
     if(p.y > centerHeight){
-        NSLog(@"Intersection");
         radius += 3;
     }
 }
